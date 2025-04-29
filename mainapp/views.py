@@ -19,8 +19,3 @@ def about(request):
 def products(request):
     return render(request, 'products.html')
 
-def product(request):
-    return render(request, 'product.html')
-
-def base(request):
-    return render(request, 'base.html')
