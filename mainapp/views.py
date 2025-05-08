@@ -1,25 +1,16 @@
-# mainapp/views.py
 from django.shortcuts import render
 from .models import Product
 
 def index(request):
-    title = 'Главная страница'
+    products = Product.objects.all()[:3]
+    return render(request, 'index.html', {'title': 'Главная страница', 'products': products})
 
-    prods = Product.objects.all()[:3]
-
-    context = {
-        'title': title,
-        'products': prods,
-    }
-
-    return render(request, 'index.html', context)
+def products(request):
+    products = Product.objects.all()
+    return render(request, 'products.html', {'title': 'Products', 'products': products})
 
 def contacts(request):
-    return  render(request, 'contacts.html')
+    return render(request, 'contacts.html')
 
 def about(request):
     return render(request, 'about.html')
-
-def products(request):
-    return render(request, 'products.html')
-
