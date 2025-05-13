@@ -1,0 +1,79 @@
+[
+  {
+    "model": "mainapp.category",
+    "pk": 1,
+    "fields": {
+      "name": "джинсы",
+      "description": ""
+    }
+  },
+  {
+    "model": "mainapp.category",
+    "pk": 2,
+    "fields": {
+      "name": "кеды",
+      "description": ""
+    }
+  },
+  {
+    "model": "mainapp.category",
+    "pk": 3,
+    "fields": {
+      "name": "сумки",
+      "description": ""
+    }
+  },
+  {
+    "model": "mainapp.category",
+    "pk": 4,
+    "fields": {
+      "name": "Куртки",
+      "description": "Очень теплые куртки"
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "name": "Синие джинсы",
+      "image": "product_images/item-02_ZihJhrb.jpg",
+      "short_description": "ддд",
+      "description": "джинсы",
+      "price": "50000.00",
+      "quantity": 5,
+      "created": "2025-05-06T13:11:17.173Z",
+      "updated": "2025-05-08T13:00:25.410Z"
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 2,
+    "fields": {
+      "category": 3,
+      "name": "см сумку",
+      "image": "product_images/item-05.jpg",
+      "short_description": "дддс",
+      "description": "сумку",
+      "price": "5000.00",
+      "quantity": 5,
+      "created": "2025-05-06T13:12:04.222Z",
+      "updated": "2025-05-08T13:00:11.810Z"
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 3,
+    "fields": {
+      "category": 4,
+      "name": "калын куртка",
+      "image": "product_images/item-03.jpg",
+      "short_description": "цыап",
+      "description": "уцаау",
+      "price": "1000000.00",
+      "quantity": 10,
+      "created": "2025-05-08T14:21:40.131Z",
+      "updated": "2025-05-08T14:21:40.131Z"
+    }
+  }
+]
