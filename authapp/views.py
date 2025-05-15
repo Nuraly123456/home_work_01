@@ -32,3 +32,12 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect(reverse('mainapp:index'))
+
+def register(request):
+    title = 'Тыркелу'
+
+    context = {
+        'title': title,
+    }
+
+    return render(request, 'auth/register.html', context)
