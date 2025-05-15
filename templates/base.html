@@ -33,15 +33,17 @@ https://www.tooplate.com/view/2114-pixie
     
     <!-- Pre Header -->
     <div id="pre-header">
-      <div class="container">
+      <div class="container d-md-flex justifi-content-md-end">
         <div class="row">
           <div class="col-md-12">
             <span>
-              {% if user.is_authenticated %}
-              {{ user.username|title }}
-              {% else %}
-               Конак
-              {% endif %}
+             {% if user.is_authenticated %}
+                    {{ user.username|title }}
+                       <a href="{% url 'auth:logout' %}" class="btn btn-light btn-sm mx-3">Шығу</a>
+                     {% else %}
+                   <a href="{% url 'auth:login' %}" class="btn btn-light btn-sm mx-3">Кіру</a>
+                     {% endif %}
+
 
             {#  {% for item in items %} #}
              {# {{ item }} #}
