@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <div class="container pt-5">
+        <div class="row">
+            <div class="avatar text-center mb-4">
+                {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" class="rounded-circle" alt="{{ user.username }}" width="150" height="150">
+                {% else %}
+                    <img src="{% static 'img/default-avatar.png' %}" class="rounded-circle" alt="No Avatar" width="150" height="150">
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="mx-auto col-4">
+                <form action="{% url 'auth:edit' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ edit_form.as_p }}
+                    <button type="submit" class="btn btn-primary">
+                        Сақтау
+                    </button>
+                </form>
+                 <button type="button" class="btn">
+                         <a href=" {% url 'mainapp:index' %} ">
+                        Басты бетке
+                         </a>
+                    </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
