@@ -1,66 +1,54 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
- <title>{% block title %}{{ title }}{% endblock %}</title>
+{% block title %}{{ title }}{% endblock %}
+
 {% block content %}
+<div class="banner">
+  <div class="container">
+    <h2>Ecommerce HTML Template</h2>
+    <p>Здесь можно добавить описание и призыв к действию.</p>
+    <a class="btn btn-primary" href="{% url 'mainapp:products' %}">Смотреть товары</a>
+  </div>
+</div>
 
-    <!-- Page Content -->
-    <!-- Banner Starts Here -->
-    <div class="banner">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="caption">
-              <h2>Ecommerce HTML Template</h2>
-              <div class="line-dec"></div>
-              <p>Pixie HTML Template can be converted into your desired CMS theme. Total <strong>5 pages</strong> included. You can use this Bootstrap v4.1.3 layout for any CMS. 
-              <br><br>Please tell your friends about <a rel="nofollow" href="https://www.facebook.com/tooplate/">Tooplate</a> free template site. Thank you. Photo credit goes to <a rel="nofollow" href="https://www.pexels.com">Pexels website</a>.</p>
-              <div class="main-button">
-                <a href="#">Order Now!</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Banner Ends Here -->
+<div class="featured-items">
+  <div class="container">
+    <h1>Жылы ұсыныс</h1>
+    <div class="owl-carousel owl-theme">
 
-    <!-- Featured Starts Here -->
-    <div class="featured-items">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="section-heading">
-              <div class="line-dec"></div>
-              <h1>Жылы усыныс</h1>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="owl-carousel owl-theme">
-
-
-      {% for product in products %}
-  <a href="#">
+{% for product in products %}
+  <a href="{% url 'mainapp:product' product.id %}">
     <div class="featured-item">
       {% if product.image %}
         <img src="{{ product.image.url }}" alt="{{ product.name }}">
       {% else %}
-        <img src="{% static 'assets/images/noimage.jpg' %}" alt="нет изображения">
+        <img src="{% static 'assets/images/noimage.jpg' %}" alt="Нет изображения">
       {% endif %}
       <h4>{{ product.name }}</h4>
       <h6>{{ product.price }} тг.</h6>
     </div>
   </a>
+{% empty %}
+  <p>Товаров пока нет.</p>
 {% endfor %}
-
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+  </div>
+</div>
 
-
-
-    <!-- Featred Ends Here -->
-  {% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+<script>
+  $(document).ready(function(){
+    $(".owl-carousel").owlCarousel({
+      items: 3,
+      loop: true,
+      margin: 10,
+      nav: true,
+      dots: true,
+      autoplay: true,
+      autoplayTimeout: 3000
+    });
+  });
+</script>
+{% endblock %}
