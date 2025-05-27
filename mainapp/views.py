@@ -4,7 +4,7 @@ from .models import Product, Category
 def index(request):
     products = Product.objects.all()[:3]
     return render(request, 'index.html', {
-        'title': 'Главная страница',
+        'title': 'Басты бет',
         'products': products,
     })
 

@@ -1,42 +1,66 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}
+    {{ title }}
+{% endblock %}
 
 {% block content %}
+<!-- Banner Starts Here -->
 <div class="banner">
   <div class="container">
-    <h2>Ecommerce HTML Template</h2>
-    <p>Здесь можно добавить описание и призыв к действию.</p>
-    <a class="btn btn-primary" href="{% url 'mainapp:products' %}">Смотреть товары</a>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="caption">
+          <h2>Біздің дүкенге қош келдіңіз!</h2>
+          <div class="line-dec"></div>
+          <p>Бізде сапалы өніммен тамаша баға!.</p>
+          <div class="main-button">
+            <a href="{% url 'mainapp:products' %}">Қазір тапсырс беріңіз!</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+<!-- Banner Ends Here -->
 
+<!-- Featured Starts Here -->
 <div class="featured-items">
   <div class="container">
-    <h1>Жылы ұсыныс</h1>
-    <div class="owl-carousel owl-theme">
-
-{% for product in products %}
-  <a href="{% url 'mainapp:product' product.id %}">
-    <div class="featured-item">
-      {% if product.image %}
-        <img src="{{ product.image.url }}" alt="{{ product.name }}">
-      {% else %}
-        <img src="{% static 'assets/images/noimage.jpg' %}" alt="Нет изображения">
-      {% endif %}
-      <h4>{{ product.name }}</h4>
-      <h6>{{ product.price }} тг.</h6>
-    </div>
-  </a>
-{% empty %}
-  <p>Товаров пока нет.</p>
-{% endfor %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <div class="line-dec"></div>
+          <h1>Ең соңғы моделдер</h1>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="owl-carousel owl-theme">
+          {% for product in products %}
+            <a href="{% url 'mainapp:product' product.id %}">
+              <div class="featured-item">
+                {% if product.image %}
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                  <img src="{% static 'assets/images/default.png' %}" alt="нет изображения">
+                {% endif %}
+                <h4>{{ product.name }}</h4>
+                <h6>{{ product.price }} тг.</h6>
+              </div>
+            </a>
+          {% empty %}
+            <p>Товары отсутствуют.</p>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<!-- Featured Ends Here -->
+{% endblock %}
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% block js %}
 <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
 <script>
   $(document).ready(function(){

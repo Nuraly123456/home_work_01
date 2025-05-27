@@ -7,8 +7,9 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv1" />
       <excludeFolder url="file://$MODULE_DIR$/templates" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/static" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.13 virtualenv at ~/Desktop/4sabac/home_work_01/venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

@@ -1,72 +1,35 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="{{ product.description|truncatewords:20 }}">
-  <meta name="author" content="">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
-  <title>{{ product.name }} – Pixie</title>
+{% block title %}
+    {{ product.name }}
+{% endblock %}
 
-  <!-- Bootstrap core CSS -->
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <!-- Additional CSS Files -->
-  <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
-  <link rel="stylesheet" href="{% static 'assets/css/tooplate-main.css' %}">
-  <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
-  <link rel="stylesheet" href="{% static 'assets/css/flex-slider.css' %}">
-</head>
+{% block css %}
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/flex-slider.css' %}">
+{% endblock %}
 
-<body>
-
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-  <div class="container">
-    <a class="navbar-brand" href="#"><img src="{% static 'assets/images/header-logo.png' %}" alt=""></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:index' %}">Главная</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:products' %}">Products</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:about' %}">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:contacts' %}">Контакты</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- Single Product Section -->
+{% block content %}
+<!-- Single Starts Here -->
 <div class="single-product">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="section-heading">
           <div class="line-dec"></div>
-          <h1>{{ product.name }}</h1>
+          <h1>Өнімдер</h1>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="product-slider">
           <div id="slider" class="flexslider">
-            <ul class="slides">
-              {% for image in product.images.all %}
-              <li><img src="{{ image.image.url }}" alt="Product image"></li>
-              {% empty %}
-              <li><img src="{% static 'assets/images/default.jpg' %}" alt="Default image"></li>
-              {% endfor %}
-            </ul>
-          </div>
-          <div id="carousel" class="flexslider">
-            <ul class="slides">
-              {% for image in product.images.all %}
-              <li><img src="{{ image.image.url }}" alt="Product thumbnail"></li>
-              {% endfor %}
-            </ul>
+            {% if product.image %}
+              <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+              <img src="{% static 'assets/images/default.png' %}" alt="нет изображения">
+            {% endif %}
           </div>
         </div>
       </div>
@@ -77,18 +40,10 @@
           <h6>{{ product.price }} тг.</h6>
           <p>{{ product.description }}</p>
           <span>{{ product.quantity }} шт.</span>
+
           <div class="down-content">
             <div class="categories">
               <h6>Категория: <span><a href="#">{{ product.category.name }}</a></span></h6>
-            </div>
-            <div class="share">
-              <h6>Share:
-                <span>
-                  <a href="#"><i class="fa fa-facebook"></i></a>
-                  <a href="#"><i class="fa fa-linkedin"></i></a>
-                  <a href="#"><i class="fa fa-twitter"></i></a>
-                </span>
-              </h6>
             </div>
           </div>
         </div>
@@ -96,59 +51,58 @@
     </div>
   </div>
 </div>
+<!-- Single Page Ends Here -->
 
-<!-- Similar Products -->
+<!-- Similar Starts Here -->
 <div class="featured-items">
   <div class="container">
-    <div class="section-heading">
-      <div class="line-dec"></div>
-      <h1>Ұқсас тауарлар</h1>
-    </div>
-    <div class="owl-carousel owl-theme">
-      {% for item in similar_products %}
-      <a href="{% url 'mainapp:product_detail' item.id %}">
-        <div class="featured-item">
-          <img src="{{ item.get_main_image_url }}" alt="{{ item.name }}">
-          <h4>{{ item.name }}</h4>
-          <h6>{{ item.price }} тг.</h6>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <div class="line-dec"></div>
+          <h1>Ұқсас өнім</h1>
         </div>
-      </a>
-      {% empty %}
-      <p>Ұқсас тауарлар табылмады.</p>
-      {% endfor %}
+      </div>
+      <div class="col-md-12">
+        <div class="owl-carousel owl-theme">
+          {% for product in products %}
+            <a href="{% url 'mainapp:product' product.id %}">
+              <div class="featured-item">
+                {% if product.image %}
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                  <img src="{% static 'assets/images/default.png' %}" alt="нет изображения">
+                {% endif %}
+                <h4>{{ product.name }}</h4>
+                <h6>{{ product.price }} тг.</h6>
+              </div>
+            </a>
+          {% empty %}
+            <p>Ұқсас өнім жоқ.</p>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<!-- Similar Ends Here -->
+{% endblock %}
 
-<!-- Footer -->
-<div class="footer">
-  <div class="container text-center">
-    <img src="{% static 'assets/images/header-logo.png' %}" alt="Logo">
-    <div class="footer-menu">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Help</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">How It Works?</a></li>
-        <li><a href="#">Contact Us</a></li>
-      </ul>
-    </div>
-    <div class="social-icons">
-      <ul>
-        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<!-- JavaScript -->
-<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'assets/js/custom.js' %}"></script>
-<script src="{% static 'assets/js/owl.js' %}"></script>
+{% block js %}
 <script src="{% static 'assets/js/isotope.js' %}"></script>
 <script src="{% static 'assets/js/flex-slider.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+<script>
+  $(document).ready(function(){
+    $(".owl-carousel").owlCarousel({
+      items: 3,
+      loop: true,
+      margin: 10,
+      nav: true,
+      dots: true,
+      autoplay: true,
+      autoplayTimeout: 3000
+    });
+  });
+</script>
+{% endblock %}
