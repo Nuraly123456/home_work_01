@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser  # <– МІНЕ ОСЫ ЖОЛ КЕРЕК
+from django.contrib.auth.models import AbstractUser
 
 class ShopUser(AbstractUser):
     avatar = models.ImageField(

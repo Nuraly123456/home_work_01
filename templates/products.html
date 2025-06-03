@@ -1,120 +1,80 @@
+{% extends 'base.html' %}
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>{{ title }}</title>
 
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
-  <link rel="stylesheet" href="{% static 'assets/css/tooplate-main.css' %}">
-  <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
-</head>
-<body>
+{% block title %}
+    {{ title }}
+{% endblock %}
 
-<!-- Pre-header -->
-<div id="pre-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <span>Қош келдіңіздер! Біздің үздік өнімдерімізді қарап шығыңыз.</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-  <div class="container">
-    <a class="navbar-brand" href="#"><img src="{% static 'assets/images/header-logo.png' %}" alt=""></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarResponsive" aria-controls="navbarResponsive"
-            aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:index' %}">Басты бет</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:products' %}">Өнімдер</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:about' %}">Біз туралы</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:contacts' %}">Хабарласу</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- Filter buttons -->
-<div class="featured-page">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <div class="section-heading">
-          <div class="line-dec"></div>
-          <h1>Өнімдер</h1>
-        </div>
-      </div>
-      <div class="col-md-8 col-sm-12">
-        <div id="filters" class="button-group">
-          <button class="btn btn-primary" data-filter="*">Барлығы</button>
-          {% for category in categories %}
-            <button class="btn btn-outline-primary" data-filter=".cat{{ category.id }}">{{ category.name }}</button>
-          {% endfor %}
-          <button class="btn btn-outline-secondary" data-filter=".low">Төмен баға</button>
-          <button class="btn btn-outline-secondary" data-filter=".high">Жоғары баға</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Products grid -->
-<div class="featured container no-gutter">
-  <div class="row posts">
-    {% for product in products %}
-      <div class="item col-md-4 mix cat{{ product.category.id }} {% if product.price < 10000 %}low{% elif product.price > 50000 %}high{% endif %}">
-        <a href="#">
-          <div class="featured-item">
-            {% if product.image %}
-              <img src="{{ product.image.url }}" alt="{{ product.name }}">
-            {% else %}
-              <img src="{% static 'assets/images/noimage.jpg' %}" alt="No image">
-            {% endif %}
-            <h4>{{ product.name }}</h4>
-            <h6>{{ product.price }} тг.</h6>
+{% block content %}
+    <!-- Page Content -->
+    <!-- Items Starts Here -->
+    <div class="featured-page">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <div class="section-heading">
+              <div class="line-dec"></div>
+              <h1>Товары</h1>
+            </div>
           </div>
-        </a>
+          <div class="col-md-8 col-sm-12">
+            <div id="filters" class="button-group">
+              <button class="btn btn-primary" data-filter="*">Все</button>
+                {% for category in categories %}
+                    <button class="btn btn-primary" data-filter=".new">
+                        {{ category.name }}</button>
+                {% endfor %}
+            </div>
+          </div>
+        </div>
       </div>
-    {% endfor %}
-  </div>
-</div>
+    </div>
 
+    <div class="featured container no-gutter">
 
-<!-- Footer -->
-<div class="footer">
-  <div class="container text-center">
-    <img src="{% static 'assets/images/header-logo.png' %}" alt="Logo">
-    <ul class="footer-menu">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Help</a></li>
-      <li><a href="#">Privacy Policy</a></li>
-    </ul>
-    <ul class="social-icons">
-      <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-      <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-    </ul>
-  </div>
-</div>
+        <div class="row posts">
 
-<!-- Copyright -->
-<div class="sub-footer text-center">
-  <div class="container">
-    <p>&copy; 2025 Pixie. Барлық құқықтар қорғалған.</p>
-  </div>
-</div>
+            {% for product in products %}
+                <div id="{{ product.pk }}" class="item new col-md-4">
+                  <a href="{% url 'mainapp:product' product.pk %}">
+                    <div class="featured-item">
+                      {% if product.image %}
+                              <img src="{{ product.image.url }}"
+                                   alt="{{ product.name }}">
+                            {% else %}
+                                <img src="{% static 'assets/images/default.png' %}"
+                                   alt="нет изображения">
+                            {% endif %}
+                      <h4>{{ product.name }}</h4>
+                      <h6>{{ product.price }} тг.</h6>
+                    </div>
+                  </a>
+                </div>
+            {% endfor %}
 
-<!-- Scripts -->
+        </div>
+    </div>
+
+    <div class="page-navigation">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ul>
+              <li class="current-page"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Featred Page Ends Here -->
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'assets/js/isotope.js' %}"></script>
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'assets/js/isotope.js' %}"></script>
@@ -131,5 +91,4 @@
     });
   });
 </script>
-</body>
-</html>
+{% endblock %}

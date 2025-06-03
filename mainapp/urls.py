@@ -2,12 +2,12 @@ from django.urls import path
 
 from mainapp.views import index, contacts, about, products, product
 
-app_name ='mainapp'
+app_name = 'mainapp'
 
 urlpatterns = [
     path('', index, name='index'),
     path('contacts/', contacts, name='contacts'),
     path('about/', about, name='about'),
     path('products/', products, name='products'),
-    path('product/<int:product_id>/', product, name='product'),
+    path('products/<int:pk>/', product, name='product'),
 ]

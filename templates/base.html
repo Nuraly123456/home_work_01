@@ -1,84 +1,100 @@
 {% load static %}
+
 <!DOCTYPE html>
-<html lang="kk">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>{% block title %}Pixie{% endblock %}</title>
+<html lang="en">
 
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
-  <link rel="stylesheet" href="{% static 'assets/css/tooplate-main.css' %}">
-  <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+  <head>
 
-  {% block css %}{% endblock %}
-</head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
-<body>
+    <title>{% block title %}Басты бет{% endblock %}</title>
 
-
-<!-- Pre-header -->
-<div id="pre-header" class="py-2" style="background-color:#007BFF; color:white;">
-  <div class="container text-right">
-    {% if user.is_authenticated %}
-      <a href="{% url 'auth:edit' %}" class="btn btn-light btn-sm" style="color:#007BFF; background-color:white;">{{ user.username|title }}</a>
-      <a href="{% url 'auth:logout' %}" class="btn btn-light btn-sm mx-2" style="color:#007BFF; background-color:white;">Шығу</a>
-    {% else %}
-      <a href="{% url 'auth:login' %}" class="btn btn-light btn-sm" style="color:#007BFF; background-color:white;">Кіру</a>
-    {% endif %}
-  </div>
-</div>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-  <div class="container">
-    <a class="navbar-brand" href="{% url 'mainapp:index' %}">
-      <img src="{% static 'assets/images/header-logo.png' %}" alt="Логотип">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:index' %}">Басты бет</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:products' %}">Өнімдер</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:about' %}">Біз туралы</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mainapp:contacts' %}">Хабарласу</a></li>
-      </ul>
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/tooplate-main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+
+    {% block css %}{% endblock %}
+
+  </head>
+
+  <body>
+
+    <!-- Pre Header -->
+    <div id="pre-header">
+      <div class="container d-md-flex justify-content-md-end">
+        <div class="row">
+          <div class="col-md-12">
+            <span>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'auth:edit' %}"
+                       class="btn btn-light btn-sm">
+                            {{ user.username|title }}
+                    </a>
+                    <a href="{% url 'auth:logout' %}"
+                       class="btn btn-light btn-sm mx-3">Шығу</a>
+                {% else %}
+                    <a href="{% url 'auth:login' %}"
+                       class="btn btn-light btn-sm mx-3">Кіру</a>
+                {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</nav>
 
-<!-- Контент -->
-{% block content %}{% endblock %}
+    {% include 'inc/inc_main_menu.html' %}
 
-<footer class="footer mt-5 bg-dark text-white pt-4">
-  <div class="container text-center">
-    <img src="{% static 'assets/images/header-logo.png' %}" alt="Logo" class="mb-3">
-    <ul class="footer-menu list-inline">
-      <li class="list-inline-item"><a href="#" class="text-white">Басты бет</a></li>
-      <li class="list-inline-item"><a href="#" class="text-white">Көмек</a></li>
-      <li class="list-inline-item"><a href="#" class="text-white">Құпиялық саясаты</a></li>
-    </ul>
-    <ul class="social-icons list-inline mt-2">
-      <li class="list-inline-item"><a href="#"><i class="fa fa-facebook text-white"></i></a></li>
-      <li class="list-inline-item"><a href="#"><i class="fa fa-twitter text-white"></i></a></li>
-    </ul>
-  </div>
-</footer>
+    {% block content %}
+        HTML-код, который отображается на странице.
+    {% endblock %}
 
-<div class="sub-footer text-center py-2" style="background-color: #007BFF; color: white;">
-  <div class="container">
-    <p>&copy; {% now "Y" %} Pixie. Барлық құқықтар қорғалған.</p>
-  </div>
-</div>
+    <!-- Sub Footer Starts Here -->
+    <div class="sub-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="copyright-text">
+              <p>Copyright &copy; {% now "Y" %} Bober Inc.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Sub Footer Ends Here -->
 
 
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-<!-- JavaScript -->
-<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-{% block js %}{% endblock %}
-</body>
+
+    <!-- Additional Scripts -->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script src="{% static 'assets/js/owl.js' %}"></script>
+
+    {% block js %}{% endblock %}
+
+    <script language = "text/Javascript">
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+
+  </body>
+
 </html>
