@@ -15,16 +15,19 @@
           <div class="col-md-4 col-sm-12">
             <div class="section-heading">
               <div class="line-dec"></div>
-              <h1>Товары</h1>
+              <h1>Өнімдер</h1>
             </div>
           </div>
           <div class="col-md-8 col-sm-12">
-            <div id="filters" class="button-group">
-              <button class="btn btn-primary" data-filter="*">Все</button>
-                {% for category in categories %}
-                    <button class="btn btn-primary" data-filter=".new">
-                        {{ category.name }}</button>
-                {% endfor %}
+           <div id="filters" class="button-group">
+    <a href="{% url 'mainapp:category' 0 %}" class="btn btn-primary {% if request.resolver_match.kwargs.pk == 0 or request.resolver_match.kwargs.pk == None %}active{% endif %}">
+        Барлығы
+    </a>
+    {% for category in categories %}
+        <a href="{% url 'mainapp:category' category.pk %}" class="btn btn-primary {% if request.resolver_match.kwargs.pk == category.pk %}active{% endif %}">
+            {{ category.name }}
+        </a>
+    {% endfor %}
             </div>
           </div>
         </div>
