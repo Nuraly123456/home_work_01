@@ -43,6 +43,8 @@
               <p>{{ product.description }}</p>
               <span>{{ product.quantity }} шт.</span>
 
+                <a href="{% url 'basket:add' product.pk %}" class="btn btn-primary">Себетке қосу</a>
+
               <div class="down-content">
                 <div class="categories">
                   <h6>Категория: <span><a href="#">{{ product.category.name }}</a></span></h6>

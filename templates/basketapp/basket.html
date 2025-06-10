@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менің себетім</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .basket-item { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
+        .basket-item h3 { margin-top: 0; }
+        .total-info { margin-top: 20px; font-weight: bold; }
+        .button {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+        .button.remove { background-color: #dc3545; }
+        .button.back { background-color: #6c757d; }
+    </style>
+</head>
+<body>
+    <h1>Менің себетім</h1>
+
+    {% if basket %}
+        {% for item in basket %}
+            <div class="basket-item">
+                <h3>{{ item.product.name }}</h3>
+                <p>Бағасы: {{ item.product.price }} ₸</p>
+                <p>Саны: {{ item.quantity }}</p>
+                <p>Жалпы құны (осы тауар үшін): {{ item.product_cost }} ₸</p>
+                <a href="{% url 'basket:remove' item.pk %}" class="button remove">Себеттен жою</a>
+                </div>
+        {% endfor %}
+
+        <hr>
+        <div class="total-info">
+            <p>Барлық тауарлар саны: {{ total_quantity }}</p>
+            <p>Жалпы сома: {{ total_cost }} ₸</p>
+        </div>
+
+    {% else %}
+        <p>Сіздің себетіңіз бос.</p>
+    {% endif %}
+
+    <p>
+        <a href="{% url 'main:index' %}" class="button back">Басты бетке оралу</a>
+    </p>
+
+    <script>
+        function updateQuantity(itemId, newQuantity) {
+            // AJAX сұрауын жіберу логикасы
+            fetch(`/basket/edit/${itemId}/${newQuantity}/`, {
+                method: 'GET', // Немесе POST
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json',
+                    // 'X-CSRFToken': getCookie('csrftoken') // POST сұраулары үшін CSRF токены қажет
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Себеттің жалпы санын, жалпы құнын және элементтің құнын жаңарту
+                // (мысалы, DOM элементтерін өзгерту арқылы)
+                // location.reload(); // Жаңарту үшін бетті қайта жүктеуге болады
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // function getCookie(name) {
+        //     let cookieValue = null;
+        //     if (document.cookie && document.cookie !== '') {
+        //         const cookies = document.cookie.split(';');
+        //         for (let i = 0; i < cookies.length; i++) {
+        //             const cookie = cookies[i].trim();
+        //             if (cookie.startsWith(name + '=')) {
+        //                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        //                 break;
+        //             }
+        //         }
+        //     }
+        //     return cookieValue;
+        // }
+    </script>
+</body>
+</html>
