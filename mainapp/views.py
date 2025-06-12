@@ -2,14 +2,9 @@ from django.shortcuts import render, get_object_or_404
 
 from mainapp.models import Product, Category
 
+from basketapp.models import Basket
 
-def get_main_menu(current='mainapp:index'):
-    return [
-        {'href': 'mainapp:index', 'name': 'Басты бет', 'active': current},
-        {'href': 'mainapp:products', 'name': 'Өнімдер', 'active': current},
-        {'href': 'mainapp:about', 'name': 'Біз туралы', 'active': current},
-        {'href': 'mainapp:contacts', 'name': 'Хабарласу', 'active': current},
-    ]
+from mainapp.utils import get_main_menu, get_basket
 
 
 def index(request):
@@ -17,27 +12,44 @@ def index(request):
 
     prods = Product.objects.all()[:4]
 
+    basket = []
+
+    if request.user.is_authenticated:
+        basket = get_basket(request.user)
+
+
     context = {
         'title': title,
         'products': prods,
         'menu_links': get_main_menu(),
+        'basket': basket,
     }
 
     return render(request, 'index.html', context)
 
 def contacts(request):
     title = 'Хабарласу'
+
+    if request.user.is_authenticated:
+        basket = get_basket(request.user)
+
     context = {
         'title': title,
         'menu_links': get_main_menu('mainapp:contacts'),
+        'basket': basket,
     }
     return render(request, 'contacts.html', context)
 
 def about(request):
     title = 'Біз туралы'
+
+    if request.user.is_authenticated:
+        basket = get_basket(request.user)
+
     context = {
         'title': title,
         'menu_links': get_main_menu('mainapp:about'),
+        'basket': basket,
     }
     return render(request, 'about.html', context)
 
@@ -46,11 +58,17 @@ def products(request, pk=None):
     prods = Product.objects.all()
     categories = Category.objects.all()
 
+    basket = []
+
+    if request.user.is_authenticated:
+        basket = get_basket(request.user)
+
     context = {
         'title': title,
         'products': prods,
         'categories': categories,
         'menu_links': get_main_menu('mainapp:products'),
+        'basket': basket,
     }
 
     if pk is not None:
@@ -72,10 +90,15 @@ def product(request, pk):
     prod = Product.objects.get(id=pk)
     same_prods = Product.objects.exclude(id=pk)
 
+
+    if request.user.is_authenticated:
+        basket = get_basket(request.user)
+
     context = {
         'title': title,
         'product': prod,
         'products': same_prods,
         'menu_links': get_main_menu('mainapp:products'),
+        'basket': basket,
     }
     return render(request, 'product.html', context)

@@ -1,11 +1,54 @@
-#filters a{
-color: #000;
+/* Filter сілтемелерінің түстері */
+#filters a {
+    color: #000;
 }
 
-#filters a:hover {
-color: #3a8bcd;
-}
-
+#filters a:hover,
 #filters a.active {
-color: #3a8bcd;
+    color: #3a8bcd;
+}
+
+/* Себет иконкасы */
+.basket {
+    position: relative;
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: url("/static/assets/images/51.png") no-repeat center center;
+    background-size: contain;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+
+/* Себеттегі сан стилі */
+.basket span {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 18px;
+    text-align: center;
+    background-color: #3a8bcd;
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
+
+/* Pre-header ішіндегі батырмалар */
+#pre-header .buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* Pre-header ішіндегі батырмалар стилі */
+#pre-header .buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

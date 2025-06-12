@@ -2,6 +2,7 @@ from django.db import models
 from mainapp.models import Product
 from config import settings
 
+
 class Basket(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -15,11 +16,25 @@ class Basket(models.Model):
     )
 
     quantity = models.PositiveIntegerField(
-        verbose_name='Количество',
+        verbose_name='Саны',
         default=0,
     )
 
     add_datetime = models.DateTimeField(
-        verbose_name='Время',
+        verbose_name='Уақыты',
         auto_now_add=True,
     )
+
+    @property
+    def product_cost(self):
+        return self.product.price * self.quantity
+
+    @property
+    def total_quantity(self):
+        _items = Basket.objects.filter(user=self.user)
+        return sum(list(map(lambda x: x.quantity, _items)))
+
+    @property
+    def total_cost(self):
+        _items = Basket.objects.filter(user=self.user)
+        return sum(list(map(lambda x: x.product_cost, _items)))
